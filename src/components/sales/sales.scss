@@ -1,0 +1,110 @@
+.sale {
+  display: flex;
+  flex-direction: row;
+
+  .products {
+    width: 69%;
+    &__item .btn {
+      &:disabled {
+        background-color: #f2f2f2;
+        border-color: #afa3a6;
+      }
+    }
+  }
+
+  .price {
+    &::before {
+      content: '$';
+    }
+    text-align: right;
+  }
+
+  .cart {
+    background-color: #F2DFF1;
+    width: 26%;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    right: 0;
+    height: calc(100% - 130px);
+    overflow-y: auto;
+
+    &__item {
+      display: flex;
+      justify-content: space-between;
+      margin: 5px 0;
+      &__desc{
+        display: flex;
+        flex-direction: column;
+        .price {
+          text-align: left;
+          font-weight: 600;
+          font-size: 1.5rem;
+        }
+      }
+      &__actions{
+        display: flex;
+        justify-content: space-between;
+        width: 35%;
+        align-items: center;
+        button {
+          border-radius: 50%;
+          width: 2.5rem;
+          height: 2.5rem;
+          font-size: 2rem;
+          line-height: 1;
+        }
+      }
+    }
+
+    .input-container {
+      border: none;
+      padding: 10px 0;
+      input {
+        text-transform: uppercase;
+        text-align: right;
+        width: 100%;
+      }
+    }
+
+    button {
+      color: #033271;
+      background-color: #94BDF2;
+      border: 2px solid #2372D9;
+      &:disabled {
+        background-color: #BBCDF2;
+        border-color: #6BA5F2;
+        color: #6BA5F2;
+      }
+      &::after {
+        display: none;
+      }
+    }
+    .btn {
+      margin-top: 20px;
+      font-weight: 600;
+    }
+  }
+
+  .subtotal, .qty {
+    margin: 3px 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  .total {
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+  .qty {
+    margin-top: 15px;
+  }
+}
+
+.sales-list {
+  margin-top: 130px;
+
+  li {
+    font-size: 2rem;
+  }
+}

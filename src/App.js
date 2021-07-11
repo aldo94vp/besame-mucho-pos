@@ -1,24 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from 'react';
+import { Route, Switch, useLocation } from 'wouter';
+import firebase from 'firebase';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
-function App() {
+import reducers from './reducers';
+import firebaseConfig from 'config';
+
+import CreateSale from 'components/sales/create.component';
+import Print from 'components/print/print.component';
+import Home from 'components/home/home.component';
+import Login from 'components/login/login.component';
+import CreateProduct from 'components/products/create.component';
+import ListProducts from 'components/products/list.component';
+import EditProduct from 'components/products/edit.component';
+
+import './app.scss';
+import SalesList from 'components/sales/list.component';
+import CreatePromoCode from 'components/promocodes/create.component';
+
+// Initialize Firebase and Redux
+firebase.initializeApp(firebaseConfig);
+const store = createStore(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+
+const App = () => {
+  const [, setLocation] = useLocation();
+  useEffect(() => {
+    setLocation('/home')
+  }, [setLocation]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route path="/home" component={Home} />
+          <Route path="/products" component={ListProducts} />
+          <Route path="/products/new" component={CreateProduct} />
+          <Route path="/products/:id" component={EditProduct} />
+          <Route path="/sales" component={SalesList} />
+          <Route path="/sales/new" component={CreateSale} />
+          <Route path="/print/:id" component={Print} />
+          <Route path="/codes/new" component={CreatePromoCode} />
+          <Route>
+            <Home />
+          </Route>
+        </Switch>
+      </div>
+    </Provider>
   );
 }
 

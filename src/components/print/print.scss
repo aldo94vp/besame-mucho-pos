@@ -1,0 +1,92 @@
+.ticket {
+  & > * {
+    font-size: 12px;
+  }
+  
+  width: 47mm;
+  max-width: 47mm;
+  .table {
+    margin-top: 2mm;
+  }
+  
+  .tr {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .thead {
+    .tr {
+      border: none;
+    }
+  }
+  
+  .description {
+    width: 26mm;
+    max-width: 26mm;
+    text-align: left;
+  }
+  
+  .quantity {
+    width: 10mm;
+    max-width: 10mm;
+    word-break: break-all;
+    text-align: center;
+  }
+  
+  .price {
+    width: 11mm;
+    max-width: 11mm;
+    word-break: break-all;
+    text-align: left;
+    &::before { 
+      content: '$';
+    }
+  }
+  
+  .line {
+    margin: 0 auto;
+    width: 44mm;
+    height: 5px;
+    &.transparent {
+      opacity: 0;
+      margin-top: 6mm;
+    }
+  }
+  
+  .centered {
+    text-align: center;
+    align-content: center;
+  }
+  
+  .header {
+    margin: 0;
+    font-size: 80%;
+    &.id {
+      font-size: 55%;
+    }
+  }
+  .logo {
+    max-width: inherit;
+    width: 40mm;
+    align-self: center;
+    display: flex;
+    margin: 8mm auto 5mm auto;
+    &.qr {
+      width: 25mm;
+      margin-top: 0;
+      margin-bottom: 25mm;
+    }  
+  }
+  
+  .total {
+    margin-right: 3.5mm;
+    text-align: right;
+  }  
+}
+
+@media print {
+  .hidden-print,
+  .hidden-print * {
+      display: none !important;
+  }
+}
