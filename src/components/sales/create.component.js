@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useLocation } from 'wouter';
 
 import { getProductsInStock } from 'services/products.service';
@@ -24,6 +24,21 @@ export const CreateSale = () => {
 
   const [, setLocation] = useLocation();
 
+  const applyPromoCode = useCallback(
+    async code => {
+      const promo = await getPromoCode(code);
+      if (!promo.empty) {
+        setPromoData(promo.docs[0].data());
+      } else {
+        setValidPromoCode(false)
+        setPromoData(null)
+        setTotal(subtotal);
+        alert('Promoción inválida');
+      }
+    },
+    [subtotal],
+  )
+
   useEffect(() => {
     const fetchData = async () => {
       const ab = new AbortController();
@@ -36,7 +51,7 @@ export const CreateSale = () => {
         }
         products.push(product);
       });
-      console.log(products)
+
       setProducts(products);
       return () => ab.abort();
     }
@@ -56,10 +71,10 @@ export const CreateSale = () => {
     setSubtotal(newTotal);
     setTotal(newTotal);
     validPromoCode && applyPromoCode(promoCode);
-  }, [list, setList])
+  }, [list, setList, promoCode, validPromoCode, applyPromoCode])
 
   useEffect(() => {
-    if (promoData.status === 'active') {
+    if (promoData && promoData.status === 'active') {
       setValidPromoCode(true)
       setTotal(subtotal * (1 - (promoData.discount / 100)));
     }
@@ -116,15 +131,6 @@ export const CreateSale = () => {
 
     const saleId = await addSale(sale); 
     setLocation(`/print/${saleId}`);
-  }
-
-  const applyPromoCode = async code => {
-    const promo = await getPromoCode(code);
-    if (!promo.empty) {
-      setPromoData(promo.docs[0].data());
-    } else {
-      alert('Promoción inválida');
-    }
   }
 
   const changePaymentMethod = e => setPaymentMethod(e.target.value);
@@ -185,14 +191,18 @@ export const CreateSale = () => {
             <p>
               Forma de pago:
             </p>
-            <label>
-              <input type="radio" onClick={changePaymentMethod} name="paymentMethod" defaultChecked={true} value="cash" />
-              Efectivo
-            </label>
-            <label>
-              <input type="radio" onClick={changePaymentMethod} name="paymentMethod" value="card" />
-              Tarjeta
-            </label>
+            <div className="radio-item">
+              <input type="radio" onClick={changePaymentMethod} id="cash-radio" name="paymentMethod" defaultChecked={true} value="cash" />
+              <label className="label-icon option1" htmlFor="cash-radio">
+                Efectivo
+              </label>
+            </div>
+            <div className="radio-item">
+              <input type="radio" onClick={changePaymentMethod} id="card-radio" name="paymentMethod" value="card" />
+              <label className="label-icon option2" htmlFor="card-radio">
+                Tarjeta
+              </label>
+            </div>
           </div>
           <button className="btn" disabled={list.length === 0} onClick={pay}>Completar Venta</button>
         </div>

@@ -13,9 +13,6 @@
   }
 
   .price {
-    &::before {
-      content: '$';
-    }
     text-align: right;
   }
 
@@ -68,6 +65,61 @@
       }
     }
 
+    div[role=group] {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      p {
+        flex: 1 0 100%;
+      }
+
+      .radio-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid #402B30;
+        position: relative;
+        border-radius: 8px;
+
+        .label-icon {
+          background-size: auto 40px;
+          background-repeat: no-repeat;
+          background-position: center 10px;
+          margin-bottom: 0;
+          padding: 15px 20px;
+          width: 70px;
+          padding-top: 65px;
+          text-align: center; 
+          justify-content: center;
+          border-radius: 8px;
+          display: flex;
+          align-items: baseline;
+
+          &.option1 {
+            background-image: url('../../assets/icons/money-bag.png');
+          }
+          &.option2 {
+            background-image: url('../../assets/icons/credit-card.png');
+          }
+        }
+
+        input[type=radio] {
+          width: 0;
+          height: 0;
+          opacity: 0;
+          position: absolute;
+
+          &:checked + .label-icon{
+            background-color: #e6eaf3;
+            &::before {
+              content: '✅ ';
+            }
+          }
+        }
+      }
+    }
+
     button {
       color: #033271;
       background-color: #94BDF2;
@@ -84,6 +136,7 @@
     .btn {
       margin-top: 20px;
       font-weight: 600;
+      width: 100%;
     }
   }
 
@@ -101,10 +154,21 @@
   }
 }
 
-.sales-list {
-  margin-top: 130px;
+.sales {
+  &-list, &-report  {
+    li {
+      font-size: 2rem;
+    }
 
-  li {
-    font-size: 2rem;
+    .pdf {
+      width: 100%;
+      height: 600px;
+    }
+  }
+  &-list {
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+    }
   }
 }

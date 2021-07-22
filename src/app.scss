@@ -15,43 +15,6 @@ body {
   font-size: 1.5rem;
 }
 
-header {
-  display: flex;
-  flex-direction: row;
-  height: 100px;
-  position: fixed;
-  top: 0;
-  background-color: #fff;
-  z-index: 10;
-
-  img {
-    width: 30%;
-    height: fit-content;
-    &.centered-logo {
-      margin: 0 auto;
-    }
-  }
-  .separator{
-    display: flex;
-    align-items: center;
-    &::before {
-      content: ' ';
-      background-color: #412429;
-      height: calc(100% - 20px);
-      position: relative;
-      width: 1px;
-      display: inline-block;
-      margin: auto 30px;
-    }
-  }
-  .separator + * {
-    margin: auto;
-  }
-  & + * {
-    margin-top: 100px;
-  }
-}
-
 .btn{
   border: none;
   border-radius: 10px;

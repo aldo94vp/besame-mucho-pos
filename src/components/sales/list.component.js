@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 
 import { getSales } from 'services/sales.service';
 
@@ -7,6 +7,7 @@ import Header from 'components/home/header.component';
 
 const SalesList = () => {
   const [sales, setSales] = useState([]);
+  const [ , setLocation] = useLocation();
 
   useEffect(() => {
     const fetchSales = async () => {
@@ -14,7 +15,6 @@ const SalesList = () => {
       const salesData = await getSales();
       const salesArray = [];
       salesData.docs.forEach(s => salesArray.push({...s.data(), id: s.id}))
-      console.log(salesArray)
       setSales(salesArray);
       ab.abort();
     }
@@ -29,14 +29,15 @@ const SalesList = () => {
         </h1>
       </Header>
       <div className="sales-list">
+        <button onClick={() => setLocation('/sales/report')}>Reporte</button>
         <ul>
           {
-            sales?.map(s => (
-              <li>
+            sales?.map((s, idx) => (
+              <li key={idx}>
                 <Link to={`/print/${s.id}`}>
-                  <a>
+                  <button type="button">
                     {new Date(s.createdAt?.seconds * 1000).toLocaleString() }
-                  </a>
+                  </button>
                 </Link>
               </li>
             ))

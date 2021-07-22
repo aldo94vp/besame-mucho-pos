@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { Route, Switch, useLocation } from 'wouter';
+import { Route, Switch } from 'wouter';
 import firebase from 'firebase';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -14,10 +13,11 @@ import Login from 'components/login/login.component';
 import CreateProduct from 'components/products/create.component';
 import ListProducts from 'components/products/list.component';
 import EditProduct from 'components/products/edit.component';
+import SalesList from 'components/sales/list.component';
+import ReportSales from 'components/sales/report.component';
+import CreatePromoCode from 'components/promocodes/create.component';
 
 import './app.scss';
-import SalesList from 'components/sales/list.component';
-import CreatePromoCode from 'components/promocodes/create.component';
 
 // Initialize Firebase and Redux
 firebase.initializeApp(firebaseConfig);
@@ -25,26 +25,22 @@ const store = createStore(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ && windo
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
 
 const App = () => {
-  const [, setLocation] = useLocation();
-  useEffect(() => {
-    setLocation('/home')
-  }, [setLocation]);
 
   return (
     <Provider store={store}>
       <div className="App">
         <Switch>
           <Route path="/login" component={Login} />
-          <Route path="/home" component={Home} />
           <Route path="/products" component={ListProducts} />
           <Route path="/products/new" component={CreateProduct} />
           <Route path="/products/:id" component={EditProduct} />
           <Route path="/sales" component={SalesList} />
           <Route path="/sales/new" component={CreateSale} />
+          <Route path="/sales/report" component={ReportSales} />
           <Route path="/print/:id" component={Print} />
           <Route path="/codes/new" component={CreatePromoCode} />
           <Route>
-            <Home />
+            <Home></Home>
           </Route>
         </Switch>
       </div>

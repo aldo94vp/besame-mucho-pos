@@ -59,3 +59,12 @@ export const getSales = async () => {
 
   return await db.collection('sales').orderBy('createdAt').get();
 }
+
+export const getReportSales = async (starDate, endDate) => {
+  const db = firebase.firestore();
+  console.log(starDate, endDate)
+  return await db.collection('sales')
+    .where('createdAt', '>=', new Date(starDate))
+    .where('createdAt', '<=', new Date(endDate))
+    .get();
+}

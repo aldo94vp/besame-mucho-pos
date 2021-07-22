@@ -22,7 +22,7 @@ const Print = () => {
       return () => ab.abort();
     }
     fetchData();
-  }, []);
+  }, [id]);
 
   return (
     <>

@@ -7,7 +7,7 @@ const Product = ({product, btnLabel, onClick, disableActionOnFewStock}) => {
     <div key={`product-${id}`} className="products__item">
       <figure>
         <img src={photoUrl} alt="" />
-        <figcaption>{name} <span className="price">{price}</span></figcaption>
+        <figcaption>{name} <span className="price">${price}</span></figcaption>
       </figure>
       <p className="code">
         <span>Código:</span>
